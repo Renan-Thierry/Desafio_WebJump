@@ -1,0 +1,103 @@
+.card_Item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 120px;
+    height: 200px;
+    margin: 15px 7px;
+    padding: 10px;
+}
+.card_Item > img {
+    width: 90%;
+    height: 60%;
+    border: 1px solid rgba(128, 128, 128, 0.445);
+}
+.card_Item > h4 {
+    color: grey;
+    text-transform: uppercase;
+    margin: 5px;
+    margin-bottom: 5%;
+    font-size: .7em;
+    text-align: center;
+}
+.card_Item > span {
+    color: red;
+    margin-bottom: 2%;
+    font-size: 1.2em;
+    font-weight: 800;
+}
+.card_Item > button {
+    display: none;
+}
+@media screen and (min-width:768px) and (max-width: 1023px) {
+    .card_Item {
+        width: 160px;
+        height: 300px;
+        margin: 5px;
+    }
+    .card_Item > h4 {
+        margin: 5px;
+    }
+    .card_Item > span {
+        font-size: 1.2em;
+        margin-bottom: 5%;
+    }
+    .card_Item > button {
+        width: 90%;
+        height: 3em;
+        border: none;
+        border-radius: 5px;
+        background-color: rgb(7, 165, 165);
+        color: #fff;
+        text-transform: uppercase;
+        display: block;
+    }
+}
+                                       /*Versao pc */
+@media screen and (min-width: 1024px) and (max-width:1439px) {
+    .card_Item {
+        width: 160px;
+        height: 300px;
+        margin: 10px;
+    }
+    .card_Item > h4 {
+        font-size: .8em;
+    }
+    .card_Item > span {
+        font-size: 1.5em;
+    }
+    .card_Item > button {
+        width: 90%;
+        height: 3em;
+        border: none;
+        border-radius: 5px;
+        background-color: rgb(7, 165, 165);
+        color: #fff;
+        text-transform: uppercase;
+        display: block;
+    }
+}
+@media screen and (min-width:1440px) {
+    .card_Item {
+        width: 160px;
+        height: 300px;
+        margin: 10px;
+    }
+    .card_Item > h4 {
+        font-size: .8em;
+    }
+    .card_Item > span {
+        font-size: 1.5em;
+    }
+    .card_Item > button {
+        width: 90%;
+        height: 3em;
+        border: none;
+        border-radius: 5px;
+        background-color: rgb(7, 165, 165);
+        color: #fff;
+        text-transform: uppercase;
+        display: block;
+    }
+}
