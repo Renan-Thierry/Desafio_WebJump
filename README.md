@@ -24,5 +24,7 @@ Bem-vindo ao Projeto do desafio webJump! Este é um projeto em React que utiliza
 2. Clone este repositório
 3. Instale as dependências:  
 ### `npm install`
-4. inicie a aplicaçao:
+4. Inicie a API:
+### `npm run backend`
+5. inicie a aplicaçao:
 ### `npm start`
