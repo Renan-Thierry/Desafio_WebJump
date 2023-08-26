@@ -9,7 +9,8 @@ import { TiThSmallOutline, TiThListOutline, TiChevronRight, TiChevronLeft} from 
 function Camisetas() {
     const [camisa, setCamisa] = useState([]);
     const [calca, setCalca] = useState([]);
-    const [roupas, setRoupas] = useState(false)
+    const [roupas, setRoupas] = useState(false);
+    const [tipoFiltro, setTipoFiltro] = useState("");
 
     useEffect(() => {
         fetch('http://localhost:5000/items', 
@@ -39,6 +40,23 @@ function Camisetas() {
         setRoupas(true)
     }
 
+    const filtro_sapatos = camisa.filter((camisas) =>
+    camisas.path && (
+        camisas.path.toLowerCase().includes("corrida") ||
+        camisas.path.toLowerCase().includes("caminhada") ||
+        camisas.path.toLowerCase().includes("casual") ||
+        camisas.path.toLowerCase().includes("social")
+    )
+    );
+
+    const handleTipoFiltro = (tipo) => {
+        setTipoFiltro(tipo);
+    }
+
+    const itensFiltrados = tipoFiltro ? filtro_sapatos.filter((sapatos) =>
+    sapatos.path.toLowerCase().includes(tipoFiltro)
+    ) : camisa;
+
     return(
         <>
             <Header />
@@ -63,10 +81,18 @@ function Camisetas() {
                     <button className={styles.btn3}></button>
                     <h3>Tipos</h3>
                     <ul>
-                        <li>Corrida</li>
-                        <li>Caminhada</li>
-                        <li>Casual</li>
-                        <li>Social</li>
+                        <Link>
+                            <li onClick={() => handleTipoFiltro("corrida")}>Corrida</li>
+                        </Link>
+                        <Link>
+                            <li onClick={() => handleTipoFiltro("caminhada")}>Caminhada</li>
+                        </Link>
+                        <Link>
+                            <li onClick={() => handleTipoFiltro("casual")}>Casual</li>
+                        </Link>
+                        <Link>
+                            <li onClick={() => handleTipoFiltro("social")}>Social</li>
+                        </Link>
                     </ul>
                 </section>
                 <section className={styles.itens_content}>
@@ -89,6 +115,10 @@ function Camisetas() {
                     </div>
                 </div>
                     <div>
+                        {itensFiltrados.length > 0 && 
+                            itensFiltrados.map((camisas) => (
+                            <ItemCard key={camisas.id} name={camisas.name} id={camisas.id} price={camisas.price} image={camisas.image}/>
+                        ))}
                         {camisa.length > 0 && 
                             camisa.map((camisas) => (
                             <ItemCard key={camisas.id} name={camisas.name} id={camisas.id} price={camisas.price} image={camisas.image}/>

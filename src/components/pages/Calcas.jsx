@@ -10,6 +10,7 @@ function Calcas() {
     const [calca, setCalca] = useState([]);
     const [camisa, setCamisa] = useState([]);
     const [roupas, setRoupas] = useState(false);
+    const [tipoFiltro, setTipoFiltro] = useState("");
 
     useEffect(() => {
         fetch('http://localhost:5000/items2', 
@@ -39,6 +40,23 @@ function Calcas() {
         setRoupas(true)
     }
 
+    const filtro_sapatos = calca.filter((calcas) =>
+    calcas.path && (
+        calcas.path.toLowerCase().includes("corrida") ||
+        calcas.path.toLowerCase().includes("caminhada") ||
+        calcas.path.toLowerCase().includes("casual") ||
+        calcas.path.toLowerCase().includes("social")
+    )
+    );
+
+    const handleTipoFiltro = (tipo) => {
+        setTipoFiltro(tipo);
+    }
+
+    const itensFiltrados = tipoFiltro ? filtro_sapatos.filter((sapatos) =>
+    sapatos.path.toLowerCase().includes(tipoFiltro)
+    ) : calca;
+
     return(
         <>
             <Header />
@@ -63,11 +81,19 @@ function Calcas() {
                     <button className={styles.btn3}></button>
                     <h3>Tipos</h3>
                     <ul>
-                        <li>Corrida</li>
-                        <li>Caminhada</li>
-                        <li>Casual</li>
-                        <li>Social</li>
-                </ul>
+                        <Link>
+                            <li onClick={() => handleTipoFiltro("corrida")}>Corrida</li>
+                        </Link>
+                        <Link>
+                            <li onClick={() => handleTipoFiltro("caminhada")}>Caminhada</li>
+                        </Link>
+                        <Link>
+                            <li onClick={() => handleTipoFiltro("casual")}>Casual</li>
+                        </Link>
+                        <Link>
+                            <li onClick={() => handleTipoFiltro("social")}>Social</li>
+                        </Link>
+                    </ul>
                 </section>
                 <section className={styles.itens_content}>
                     {roupas ? (
@@ -89,6 +115,10 @@ function Calcas() {
                     </div>
                 </div>
                     <div>
+                        {itensFiltrados.length > 0 && 
+                            itensFiltrados.map((sapatos) => (
+                            <ItemCard key={sapatos.id} name={sapatos.name} id={sapatos.id} price={sapatos.price} image={sapatos.image}/>
+                        ))}
                         {calca.length > 0 && 
                             calca.map((calcas) => (
                             <ItemCard key={calcas.id} name={calcas.name} id={calcas.id} price={calcas.price} image={calcas.image}/>

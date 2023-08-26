@@ -7,7 +7,8 @@ import { Link } from "react-router-dom";
 import { TiThSmallOutline, TiThListOutline, TiChevronRight, TiChevronLeft} from 'react-icons/ti';
 
 function Sapatos() {
-    const [sapato, setSapato] = useState([])
+    const [sapato, setSapato] = useState([]);
+    const [tipoFiltro, setTipoFiltro] = useState("");
 
     useEffect(() => {
         fetch('http://localhost:5000/items3', 
@@ -20,6 +21,24 @@ function Sapatos() {
         })
         .catch(erro => console.log(erro))
     },[])
+
+    const filtro_sapatos = sapato.filter((sapatos) =>
+    sapatos.path && (
+        sapatos.path.toLowerCase().includes("corrida") ||
+        sapatos.path.toLowerCase().includes("caminhada") ||
+        sapatos.path.toLowerCase().includes("casual") ||
+        sapatos.path.toLowerCase().includes("social")
+    )
+    );
+
+    const handleTipoFiltro = (tipo) => {
+        setTipoFiltro(tipo);
+    }
+
+    const itensFiltrados = tipoFiltro ? filtro_sapatos.filter((sapatos) =>
+    sapatos.path.toLowerCase().includes(tipoFiltro)
+    ) : sapato;
+    
     return(
         <>
             <Header />
@@ -44,10 +63,18 @@ function Sapatos() {
                     <button className={styles.btn3}></button>
                     <h3>Tipos</h3>
                     <ul>
-                        <li>Corrida</li>
-                        <li>Caminhada</li>
-                        <li>Casual</li>
-                        <li>Social</li>
+                        <Link>
+                            <li onClick={() => handleTipoFiltro("corrida")}>Corrida</li>
+                        </Link>
+                        <Link>
+                            <li onClick={() => handleTipoFiltro("caminhada")}>Caminhada</li>
+                        </Link>
+                        <Link>
+                            <li onClick={() => handleTipoFiltro("casual")}>Casual</li>
+                        </Link>
+                        <Link>
+                            <li onClick={() => handleTipoFiltro("social")}>Social</li>
+                        </Link>
                     </ul>
                 </section>
                 <section className={styles.itens_content}>
@@ -66,6 +93,10 @@ function Sapatos() {
                     </div>
                 </div>
                     <div>
+                        {itensFiltrados.length > 0 && 
+                            itensFiltrados.map((sapatos) => (
+                            <ItemCard key={sapatos.id} name={sapatos.name} id={sapatos.id} price={sapatos.price} image={sapatos.image}/>
+                        ))}
                         {sapato.length > 0 && 
                             sapato.map((sapatos) => (
                             <ItemCard key={sapatos.id} name={sapatos.name} id={sapatos.id} price={sapatos.price} image={sapatos.image}/>
